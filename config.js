@@ -1,6 +1,10 @@
 module.exports = {
 
-	'secret': 'ilovescotchyscotch',
-	'database': 'mongodb://noder:noderauth@proximus.modulusmongo.net:27017/so9pojyN'
-
+	secret: 'is2laboratory2017',
+	database: {
+		uri: 'mongodb://ds163595.mlab.com:63595/users',
+		user: 'user',
+		password: 'user'
+	}
+	
 };
