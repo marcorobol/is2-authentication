@@ -1,7 +1,9 @@
 # Node Token Authentication
 
-This is a starting point to demonstrate the method of authentication by verifying a token using Express route middleware.
-Code taken from scotch.io tutorial at https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens.
+This is a starting point for token-based authentication with Express and CORS enabled fetch API.
+
+Back-end Inspired by https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens.
+Front-end inspired by http://blog.miguelgrinberg.com/post/writing-a-javascript-rest-client.
 
 ## Requirements
 
