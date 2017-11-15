@@ -29,7 +29,6 @@ app.use(bodyParser.json());
 // routes ==========================================================
 // =================================================================
 
-/*
 // setup route to create the first user
 app.get('/setup', function(req, res) {
 
@@ -46,7 +45,6 @@ app.get('/setup', function(req, res) {
 		res.json({ success: true });
 	});
 });
-*/
 
 // basic route (http://localhost:8080)
 app.get('/', function(req, res) {
@@ -108,7 +106,7 @@ apiRoutes.post('/authenticate', function(req, res) {
 apiRoutes.use(function(req, res, next) {
 
 	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+	var token = req.body.token || req.params.token || req.headers['x-access-token'];
 
 	// decode token
 	if (token) {
@@ -144,14 +142,68 @@ apiRoutes.get('/', function(req, res) {
 	res.json({ message: 'Welcome to the coolest API on earth!' });
 });
 
-apiRoutes.get('/users', function(req, res) {
+apiRoutes.route('/users')
+.get(function(req, res) {
 	User.find({}, function(err, users) {
 		res.json(users);
+	});
+})
+.post(function (req, res) {
+	var user = new User();
+	user.name = req.body.name;
+	user.password = req.body.password;
+	user.admin = req.body.admin;
+
+	// save the bear and check for errors
+	user.save(function (err) {
+		if (err) { res.send(err); }
+		res.json(user);
+	});
+
+})
+
+apiRoutes.route('/users/:user_id')
+.delete(function (req, res) {
+	User.remove({
+		_id: req.params.user_id
+	}, function (err, bear) {
+		if (err) { res.send(err); }
+		res.json({ message: 'Successfully deleted' });
+	});
+})
+.put(function (req, res) {
+	User.findById(req.params.user_id, function (err, user) {
+		if (err) { res.send(err); }
+		// update the bears info
+		user.name = req.body.name || user.name;
+		user.password = req.body.password || user.password;
+		user.admin = req.body.admin;
+		// save the bear
+		user.save(function (err) {
+			if (err) { res.send(err); }
+			res.json(user);
+		});
+
 	});
 });
 
 apiRoutes.get('/check', function(req, res) {
 	res.json(req.decoded);
+});
+
+// middleware route to support CORS and preflighted requests
+app.use(function (req, res, next) {
+    //Enabling CORS
+    res.header('Access-Control-Allow-Origin', '*');
+    //Support header x-access-token for the authentication token
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token');
+    res.header('Content-Type', 'application/json');
+    if (req.method == 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+        return res.status(200).json({});
+    }
+    // make sure we go to the next routes
+    next();
 });
 
 app.use('/api', apiRoutes);
