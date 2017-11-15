@@ -1,8 +1,7 @@
 # Node Token Authentication
 
-This repo uses JSON Web Tokens and the [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) package to implement token based authentication on a simple Node.js API.
-
 This is a starting point to demonstrate the method of authentication by verifying a token using Express route middleware.
+Code taken from scotch.io tutorial at https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens.
 
 ## Requirements
 
@@ -10,14 +9,13 @@ This is a starting point to demonstrate the method of authentication by verifyin
 
 ## Usage
 
-1. Clone the repo: `git clone git@github.com:scotch-io/node-token-authentication`
+1. Clone the repository
 2. Install dependencies: `npm install`
 3. Change SECRET in `config.js`
 4. Add your own MongoDB database to `config.js`
 5. Start the server: `node server.js`
-6. Create sample user by visiting: `http://localhost:8080/setup`
-
-Once everything is set up, we can begin to use our app by creating and verifying tokens.
+6. Create sample user by visiting: `/setup`
+7. Open the client in docs/index.html (it is also served as github pages)
 
 ### Getting a Token
 
